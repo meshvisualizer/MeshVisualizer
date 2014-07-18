@@ -1,4 +1,4 @@
-﻿Build started 7/17/2014 9:42:06 PM.
+﻿Build started 7/17/2014 10:07:29 PM.
      1>Project "D:\MeshVisualizer\MeshVis\MeshVis\MeshVis.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\MeshVis.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -33,4 +33,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:06.79
+Time Elapsed 00:00:01.41

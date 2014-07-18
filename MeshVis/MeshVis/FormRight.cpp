@@ -61,3 +61,8 @@ void CFormRight::OnBnClickedButton1()
 {
 	// TODO: Add your control notification handler code here
 }
+
+
+
+
+//This is for git test
