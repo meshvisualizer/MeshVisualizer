@@ -66,3 +66,4 @@ void CFormRight::OnBnClickedButton1()
 
 
 //This is for git test
+//git test from right computer
