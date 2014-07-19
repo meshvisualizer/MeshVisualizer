@@ -4,7 +4,8 @@
 #include "stdafx.h"
 #include "MeshVis.h"
 #include "FormRight.h"
-
+#include "Node.h"
+#include "MeshVisDoc.h"
 
 // CFormRight
 
@@ -56,8 +57,9 @@ void CFormRight::Dump(CDumpContext& dc) const
 
 void CFormRight::OnBnClickedOk()
 {
+	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
 	
-	float rotation = 0;
+	static float rotation = 0;
 	m_OpenGL.Init( (GetDC())->m_hDC );
 	// TODO: Add your control notification handler code here
 		////////// CLEAR BUFFERS ////////////////////
@@ -68,153 +70,83 @@ void CFormRight::OnBnClickedOk()
 	
 	gluLookAt(0.0f, 0.0f, 50.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
-	// draw two spinning triangles, back to back
+
 	glPushMatrix();
 	{
+		glRotatef(++rotation,0,1,0);
+		{
+			glPointSize(2);
+			glColor3f(1.0, 0.0, 0.0);
+			glBegin(GL_POINTS);
+				for(int j = 0; j<pDoc->GV->getNumNode(); j++)
+				{
+					std::string node = pDoc->GV->getNode(j)->toString();
+					Node * tn = pDoc->GV->getNode(j);
+					int id = tn->getID();
+					double x = tn->getX(); 
+					double y = tn->getY();
+					double z = tn->getZ();
+					glVertex3f(x*10,y*10,z*10);		//Scaled by 10 for testing
+				}
+			glEnd();
+		}
+	}
+	glPopMatrix();
+	glPushMatrix();
+	{
+		glTranslatef(-10.0,-10.0,0);
 		glRotatef(rotation,0,1,0);
 		{
-			/*glBegin(GL_TRIANGLES);
-			{
-				// first triangle
-				glColor3f(  0.0f,  1.0f, 0.0f);
-				glVertex3f( 0.0f, 15.0f, 0.0f);
-
-				glColor3f(    0.0f,   1.0f, 0.0f);
-				glVertex3f( -15.0f, -15.0f, 0.0f);
-
-				glColor3f(   0.0f,   0.0f, 0.0f);
-				glVertex3f( 15.0f, -15.0f, 0.0f);
-
-				// second triangle
-				glColor3f(  0.0f,  0.0f, 1.0f);
-				glVertex3f( 0.0f, 15.0f, 0.0f);
-
-				glColor3f(  0.0f,   0.0f, 0.0f);
-				glVertex3f(15.0f, -15.0f, 0.0f);
-
-				glColor3f(    0.0f,   0.0f, 1.0f);
-				glVertex3f( -15.0f, -15.0f, 0.0f);
-			}
-			glEnd();*/
-			GLint NumberOfPoints = 10;
-			GLfloat x[10],y[10], z[10];
-			for(int i = 0; i < 10; i++){
-			x[i] = y[i] = z[i] = (GLfloat) i;
-			}
-			glPointSize(5);
-			glColor3f(1.0, 0.0, 0.0);
-			//glBegin( GL_POINTS ); //Chaing this to GL_POINTS to only see the nodes.
-			/*
-			for ( int i = 0; i < NumberOfPoints; ++i )
-			{
-			glVertex3f( x[i], y[i], z[i]);
-			}*/
-			//glVertex3f( 0, 0, 0);
-			/*float vertex3f[] = {
-			0.0f,0.0f,0.0f,
-			10.0f,0.0f,0.0f,
-			10.0f,10.0f,0.0f,
-			0.0f,10.0f,0.0f,
-			0.0f,0.0f,10.0f,
-			10.0f,0.0f,10.0f,
-			10.0f,10.0f,10.0f,
-			0.0f,10.0f,10.0f
-			};*/
-			glBegin(GL_QUADS);
-			glVertex3f(0.0,0.0,0.0);
-			glVertex3f(10.0,0.0,0.0);
-			glVertex3f(10.0,10.0,0.0);
-			glVertex3f(0.0,10.0,0.0);
-			glEnd();
-			
-			glColor3f(0.0, 0.0, 1.0);
-			glBegin(GL_QUADS);
-			glVertex3f(0.0,0.0,-10.0);
-			glVertex3f(10.0,0.0,-10.0);
-			glVertex3f(10.0,10.0,-10.0);
-			glVertex3f(0.0,10.0,-10.0);
-		glEnd();
-		//glBegin(GL_QUAD)
-		glColor3f(0.0, 1.0, 0.0);
-		glLineWidth(2.0);
-		glBegin(GL_LINES);
-			glVertex3f(0.0,0.0,0.0);
-			glVertex3f(10.0,0.0,0.0);
-		glEnd();
-
-		glBegin(GL_LINES);
-			glVertex3f(10.0,0.0,0.0);
-			glVertex3f(10.0,10.0,0.0);
-			glEnd();
-
-		glBegin(GL_LINES);
-			glVertex3f(10.0,10.0,0.0);
-			glVertex3f(0.0,10.0,0.0);
-			glEnd();
-
-		glBegin(GL_LINES);
-			glVertex3f(0.0,0.0,0.0);
-			glVertex3f(0.0,10.0,0.0);
-			glEnd();
-
-			//glColor3f(0.0, 0.0, 1.0);
-			glBegin(GL_LINES);
-			glVertex3f(0.0,0.0,0.0);
-			glVertex3f(0.0,0.0,-10.0);
-		glEnd();
-
-		glBegin(GL_LINES);
-			glVertex3f(10.0,0.0,0.0);
-			glVertex3f(10.0,0.0,-10.0);
-			glEnd();
-
-			glBegin(GL_LINES);
-			glVertex3f(10.0,10.0,0.0);
-			glVertex3f(10.0,10.0,-10.0);
-			glEnd();
-
-			glBegin(GL_LINES);
-			glVertex3f(0.0,10.0,0.0);
-			glVertex3f(0.0,10.0,-10.0);
-			glEnd();
-
-			//glColor3f(1.0, 0.0, 0.0);
-			glBegin(GL_LINES);
-			glVertex3f(0.0,0.0,-10.0);
-			glVertex3f(10.0,0.0,-10.0);
-		glEnd();
-
-		glBegin(GL_LINES);
-			glVertex3f(10.0,0.0,-10.0);
-			glVertex3f(10.0,10.0,-10.0);
-			glEnd();
-
-			glBegin(GL_LINES);
-			glVertex3f(10.0,10.0,-10.0);
-			glVertex3f(0.0,10.0,-10.0);
-			glEnd();
-
-			glBegin(GL_LINES);
-			glVertex3f(0.0,0.0,-10.0);
-			glVertex3f(0.0,10.0,-10.0);
-			glEnd();
-			
 			//Axes
 			glColor3f(1.0, 0.0, 0.0);
 			glBegin(GL_LINES);
-			glVertex3f(-10.0,0.0,0.0);
-			glVertex3f(10.0,0.0,0.0);
+				glVertex3d(0.0, 0.0, 0.0);
+				glVertex3d(6.0, 0.0, 0.0);
 			glEnd();
+			glBegin(GL_POLYGON);
+				glVertex3d(4.5,-0.5, 0.0);
+				glVertex3d(6.0, 0.0, 0.0);
+				glVertex3d(4.5, 0.5, 0.0);
+			glEnd();
+			glBegin(GL_POLYGON);
+				glVertex3d(4.5, 0.0,-0.5);
+				glVertex3d(6.0, 0.0, 0.0);
+				glVertex3d(4.5, 0.0, 0.5);
+			glEnd();
+			// Draw CSI y in Green
 			glColor3f(0.0, 1.0, 0.0);
 			glBegin(GL_LINES);
-			glVertex3f(0.0,-10.0,0.0);
-			glVertex3f(0.0,10.0,0.0);
+				glVertex3d(0.0, 0.0, 0.0);
+				glVertex3d(0.0, 6.0, 0.0);
 			glEnd();
+			glBegin(GL_POLYGON);
+				glVertex3d(0.5, 4.5, 0.0);
+				glVertex3d(0.0, 6.0, 0.0);
+				glVertex3d(-0.5,4.5, 0.0);
+			glEnd();
+			glBegin(GL_POLYGON);
+				glVertex3d(0.0, 4.5,-0.5);
+				glVertex3d(0.0, 6.0, 0.0);
+				glVertex3d(0.0, 4.5, 0.5);
+			glEnd();
+			// Draw CSI z in Blue
 			glColor3f(0.0, 0.0, 1.0);
 			glBegin(GL_LINES);
-			glVertex3f(0.0,0.0,-10.0);
-			glVertex3f(0.0,0.0,10.0);
+				glVertex3d(0.0, 0.0, 0.0);
+				glVertex3d(0.0, 0.0, 6.0);
 			glEnd();
+			glBegin(GL_POLYGON);
+				glVertex3d(0.5, 0.0, 4.5);
+				glVertex3d(0.0, 0.0, 6.0);
+				glVertex3d(-0.5,0.0, 4.5);
+			glEnd();
+			glBegin(GL_POLYGON);
+				glVertex3d(0.0, 0.5, 4.5);
+				glVertex3d(0.0, 0.0, 6.0);
+				glVertex3d(0.0,-0.5, 4.5);
+			glEnd();
+
+			glTranslatef(-50.0,-50.0,0);
 			
 		}
 	}
@@ -233,7 +165,7 @@ void CFormRight::OnBnClickedOk()
 	else
 		rotation+=2;
 	
-OutputDebugString(_T("\nThe button was pressed however,\nThis should in no way alter the original program so \n it really better not\n"));
+	OutputDebugString(_T("\nThe button was pressed however,\nThis should in no way alter the original program so \n it really better not\n"));
 }
 
 

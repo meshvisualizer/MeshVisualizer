@@ -241,7 +241,7 @@ std::string ParseInput::nextToken(std::string *ps)	//by Ce
 	std::string result;
 
 	//trim leading spaces and tabs
-	while((*ps)[0]==' ' || (*ps)[0]=='/t')
+	while((*ps)[0]==' ' || (*ps)[0]=='\t')
 	{
 		ps->erase(0,1);
 	}
@@ -250,11 +250,11 @@ std::string ParseInput::nextToken(std::string *ps)	//by Ce
 	int i;
 	for(i=0;i<(ps->length());i++)
 	{
-		if((*ps)[i]==' ' || (*ps)[i]=='/t')
+		if((*ps)[i]==' ' || (*ps)[i]=='\t')
 			break;
 	}
 	result =  ps->substr(0,i);
-	ps->erase(0,i);				//remove the token has been just taken.
+	ps->erase(0,i);				
 	return result;
 }
 

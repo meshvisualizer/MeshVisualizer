@@ -34,5 +34,3 @@ public:
 	afx_msg void OnItemchangedList2(NMHDR *pNMHDR, LRESULT *pResult);
 };
 
-
-//test github
