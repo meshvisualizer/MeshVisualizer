@@ -61,3 +61,4 @@
 #include <sstream>
 #include <afx.h>
 
+#define SCALE 2

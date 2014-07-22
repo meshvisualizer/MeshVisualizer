@@ -18,6 +18,8 @@ GlobalVars::GlobalVars()
 	this->numNodes = 0;
 	this->numElements = 0;
 	this->created = false;
+	this->viewAxes = true;
+	this->viewNodes = true;
 }
 
 GlobalVars::~GlobalVars()//Will need ot delete the node and element lists.
@@ -68,4 +70,27 @@ std::vector<int>* GlobalVars::getElement(int n)
 void GlobalVars::setCreated(bool val)
 {
 	this->created = val;
+}
+
+void GlobalVars::setViewAxes(bool val)
+{
+	this->viewAxes = val;
+}
+
+void GlobalVars::setViewNodes(bool val)
+{
+	this->viewNodes = val;
+}
+
+std::vector<double> GlobalVars::getNodeVec(int e, int n, float scale)
+{
+	//int* xval = this->(*(elementList[e]))[n];
+	std::vector<int>* nodes = this->elementList[e];
+	int nodeID = (*nodes)[n+3]-1;
+	std::vector<double> nvec = std::vector<double>(3);
+
+	nvec[0] = this->nodeList[nodeID]->getX()*scale;
+	nvec[1] = this->nodeList[nodeID]->getY()*scale;
+	nvec[2] = this->nodeList[nodeID]->getZ()*scale;
+	return nvec;
 }

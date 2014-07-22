@@ -99,6 +99,7 @@ void COpenGL::Set_Viewport3D()
 		m_view_far_clip );	// Distance to far clipping plane
 
 	glViewport( 0, 0, m_view_width, m_view_height );
+	//glViewport( 0, 0, 1200, 500 );
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

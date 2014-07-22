@@ -18,6 +18,8 @@ private:
 	std::vector<Node*> nodeList; //May want to change this to pointers to nodes.
 	std::vector<std::vector<int>*> elementList;
 	bool created;
+	bool viewNodes;
+	bool viewAxes;
 	//List of elements
 	//std::vector<Element> elementList; //Element class not yet implemented.
 public:
@@ -32,10 +34,13 @@ public:
 	int getMaxNodeAssociations(){return maxNodeAssociations;};
 	bool getCreated(){return created;};
 	std::string getFileType(){return fileType;};
+	bool showNodes(){return viewNodes;};
+	bool showAxes(){return viewAxes;};
 	//int getNodesInElement(int n);//not needed yet.
 	//std::vector<Node> getNodeList();
 	Node* getNode(int n);
 	std::vector<int>* getElement(int n);
+	std::vector<double> getNodeVec(int e, int n, float scale);
 
 	//Setters
 	void setNumNodes(int n);
@@ -45,6 +50,8 @@ public:
 	void setFileType(std::string f);
 	void setElementList(std::vector<std::vector<int>*> el);
 	void setCreated(bool val);
+	void setViewNodes(bool val);
+	void setViewAxes(bool val);
 	//Operators
 	void addNode(Node* n);//not implemented yet.
 	

@@ -2,7 +2,6 @@
 #pragma once
 
 
-
 // CFormRight form view
 
 class CFormRight : public CFormView
@@ -28,13 +27,30 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedButton1();
+	//afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnSize(UINT nType, int cx, int cy);
 	afx_msg void OnDestroy();
 	virtual BOOL Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwStyle, const RECT& rect, CWnd* pParentWnd, UINT nID, CCreateContext* pContext = NULL);
-	afx_msg void OnBnClickedButton1Hello();
+	//afx_msg void OnBnClickedButton1Hello();
 	virtual void OnInitialUpdate();
+	afx_msg BOOL OnMouseWheel(UINT nFlags, short zDelta, CPoint pt);
+	afx_msg void OnPaint();
+
+	afx_msg void OnBnClickedXplus();
+	afx_msg void OnBnClickedXminus();
+	afx_msg void OnBnClickedYplus();
+	afx_msg void OnBnClickedYminus();
+	afx_msg void OnBnClickedZplus();
+	afx_msg void OnBnClickedZminus();
+
+private:
+	void CFormRight::RenderScene();
+	float rotate_x, rotate_y, rotate_z, scale;
+	float findOptimalScale();
+
+
+	
 };
 
 

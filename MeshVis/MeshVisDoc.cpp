@@ -82,7 +82,7 @@ void CMeshVisDoc::Serialize(CArchive& ar)
 		//OutputDebugString(_T("The nodes should now be stored into the GV node list\n"));
 		
 		//The next 2 for loops print out nodes and elements from the GV pointer for testing purposes.
-		
+		/*
 		for(int j = 0; j<GV->getNumNode(); j++)
 		{
 			std::string node = GV->getNode(j)->toString();
@@ -111,7 +111,7 @@ void CMeshVisDoc::Serialize(CArchive& ar)
 				
 			}
 			OutputDebugString(_T("\n"));
-		}  //END OF PRINTING
+		}*/  //END OF PRINTING
 	}
 }
 

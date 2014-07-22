@@ -79,7 +79,7 @@ void CFormLeft::OnLvnItemchangedNodes(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CFormLeft::OnInitialUpdate()
 {
-	OutputDebugString(_T("\nThe on Initial Update method was called.\n"));
+	//OutputDebugString(_T("\nThe on Initial Update method was called.\n"));
 	
 	CFormView::OnInitialUpdate();
 	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
@@ -93,9 +93,9 @@ void CFormLeft::OnInitialUpdate()
 		d = m_Nodes.InsertColumn(3,_T("Z"),0,50,-1);
 		pDoc->GV->setCreated(true);
 	}
-	CString testing;
-	testing.Format(_T("THIS ONE: %d"), pDoc->GV->getNumNode());
-	OutputDebugString(testing);
+	//CString testing;
+	//testing.Format(_T("THIS ONE: %d"), pDoc->GV->getNumNode());
+//	OutputDebugString(testing);
 	/******************************************************************************************************/
 	for(int i = 0; i < pDoc->GV->getNumNode(); i++)//Loop for nodes 
 		{
@@ -113,19 +113,19 @@ void CFormLeft::OnInitialUpdate()
 				case 1:{
 					double x = n->getX();
 					CString coord;
-					coord.Format(_T("%f"), x);
+					coord.Format(_T("%lf"), x);
 					m_Nodes.SetItemText(i,j,coord);
 					break;}
 				case 2:{
 					double y = n->getY();
 					CString coord;
-					coord.Format(_T("%f"), y);
+					coord.Format(_T("%lf"), y);
 					m_Nodes.SetItemText(i,j,coord);
 					break;}
 				case 3: {
 					double z = n->getZ();
 					CString coord;
-					coord.Format(_T("%f"), z);
+					coord.Format(_T("%lf"), z);
 					m_Nodes.SetItemText(i,j,coord);
 					break;}
 				}

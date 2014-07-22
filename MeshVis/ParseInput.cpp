@@ -101,9 +101,9 @@ int ParseInput::getNodes(GlobalVars *gv)
 	{
 		//METHOD HERE TO DELIMITE LINE OF NODES
 		std::string strToParse = Lines[i];
-		CString ival;
-		ival.Format(_T("i = %d\n"), i);
-		OutputDebugString(ival);//These lines are for debugging purposes, they print the current line number
+		//CString ival;
+		//ival.Format(_T("i = %d\n"), i);
+		//OutputDebugString(ival);//These lines are for debugging purposes, they print the current line number
 		strToParse.insert(strToParse.length()," ");
 		std::string id_s = nextToken(&strToParse);
 		std::string x_s = nextToken(&strToParse);
@@ -115,8 +115,8 @@ int ParseInput::getNodes(GlobalVars *gv)
 		double y = atof(y_s.c_str());
 		double z = atof(z_s.c_str());
 		Node* n = new Node(id,x,y,z);
-		ival.Format(_T("id:%d x:%f y:%f z: %f\n"), id,x,y,z);
-		OutputDebugString(ival); //these lines are for debugging they print the id and xyz values above comments must also be turned on for these to work or ival must be redecalred
+		//ival.Format(_T("id:%d x:%f y:%f z: %f\n"), id,x,y,z);
+		//OutputDebugString(ival); //these lines are for debugging they print the id and xyz values above comments must also be turned on for these to work or ival must be redecalred
 		gv->addNode(n);
 	}
 	//NEED TO CATCH ERROR EITHER WITH TRY CATCH OR manual error checking
