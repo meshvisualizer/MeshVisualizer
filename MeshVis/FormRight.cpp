@@ -411,8 +411,6 @@ BOOL CFormRight::Create(LPCTSTR lpszClassName, LPCTSTR lpszWindowName, DWORD dwS
 
 
 
-
-
 void CFormRight::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
