@@ -5,7 +5,6 @@
 //#include "MFC Test.h"
 #include "OpenGL.h"
 
-
 // COpenGL
 
 IMPLEMENT_DYNAMIC(COpenGL, CWnd)
@@ -15,9 +14,9 @@ COpenGL::COpenGL()
 	HDC		m_hDC = NULL;
 	HGLRC	m_hRC = NULL;
 	
-	m_view_far_clip = 3000.0f;
-	m_view_near_clip = 5.0f;
-	m_view_fov = 50.0f;
+	m_view_far_clip = 3000.0f;//was 3000
+	m_view_near_clip = 5.0f;//was 5
+	m_view_fov = 50.0f;//was 50
 }
 
 COpenGL::~COpenGL()
@@ -97,7 +96,6 @@ void COpenGL::Set_Viewport3D()
 		m_view_aspect,		// Aspect ratio of view volume
 		m_view_near_clip,	// Distance to near clipping plane
 		m_view_far_clip );	// Distance to far clipping plane
-
 	glViewport( 0, 0, m_view_width, m_view_height );
 	//glViewport( 0, 0, 1200, 500 );
 
@@ -128,7 +126,7 @@ void COpenGL::Setup()
 {
 	// put generic OpenGL code here
 
-	glClearColor(0.0, 0.0, 0.0, 0.0);
+	glClearColor(0.5, 0.6, 0.73, 0.0);
 
 	// Set OpenGL state variables
 	glPolygonMode(GL_FRONT, GL_FILL);

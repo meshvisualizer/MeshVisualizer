@@ -46,8 +46,8 @@ public:
 
 private:
 	void CFormRight::RenderScene();
-	float rotate_x, rotate_y, rotate_z, scale;
-	float findOptimalScale();
+	float rotate_x, rotate_y, rotate_z, scale, cameraZ, trans_x, trans_y, trans_z;
+	void CFormRight::autoSizing();
 
 
 	

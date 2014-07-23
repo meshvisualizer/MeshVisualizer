@@ -30,7 +30,7 @@ public:
 	virtual ~ParseInput();
 	int getNodes(GlobalVars *gv);
 	int getElements(GlobalVars *gv);
-	void lineReader(GlobalVars *gv);//Method for reading lines
+	int lineReader(GlobalVars *gv);//Method for reading lines
 
 };
 

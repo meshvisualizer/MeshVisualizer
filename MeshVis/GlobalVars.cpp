@@ -15,11 +15,13 @@ Node* GlobalVars::getNode(int n)
 }
 GlobalVars::GlobalVars()
 {
+	this->fileType = "";
 	this->numNodes = 0;
 	this->numElements = 0;
 	this->created = false;
 	this->viewAxes = true;
-	this->viewNodes = true;
+	this->viewNodes = false;
+	this->fileOpen = false;
 }
 
 GlobalVars::~GlobalVars()//Will need ot delete the node and element lists.
@@ -93,4 +95,33 @@ std::vector<double> GlobalVars::getNodeVec(int e, int n, float scale)
 	nvec[1] = this->nodeList[nodeID]->getY()*scale;
 	nvec[2] = this->nodeList[nodeID]->getZ()*scale;
 	return nvec;
+}
+
+void GlobalVars::setFileOpen(bool val)
+{
+	this->fileOpen = val;
+}
+
+void GlobalVars::setMaxX(double n)
+{
+	this->maxX = n;
+}
+
+void GlobalVars::setMinX(double n)
+{
+	this->minX = n;
+}
+
+void GlobalVars::setMaxY(double n)
+{
+	this->maxY = n;
+}
+
+void GlobalVars::setMaxZ(double n)
+{
+	this->maxZ = n;
+}
+void GlobalVars::setMinY(double n)
+{
+	this->minY = n;
 }

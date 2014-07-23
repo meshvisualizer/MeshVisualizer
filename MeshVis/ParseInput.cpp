@@ -9,8 +9,8 @@
 
 ParseInput::ParseInput(CString fin)
 {
-	std::string SIE = "SIE";		//To Yoshi: Are these two vars useful?
-	std::string FEM = "FEMIN";		//- Ce
+	//std::string SIE = "SIE";		//To Yoshi: Are these two vars useful?
+	//std::string FEM = "FEMIN";		//- Ce
 
 	filename = fin;
 
@@ -20,7 +20,7 @@ ParseInput::~ParseInput()
 {
 }
 
-void ParseInput::lineReader(GlobalVars *gv) 
+int ParseInput::lineReader(GlobalVars *gv) 
 { 
 	//OutputDebugString(_T("\nLineReader called\n"));
     std::ifstream file(filename);//will become the file name //will need a try catch somewhere
@@ -32,24 +32,29 @@ void ParseInput::lineReader(GlobalVars *gv)
 	file.close();//not sure if this is needed at this point or later
 	if(Lines[1].find("FEMIN")!= std::string::npos)
 	{
+		//OutputDebugString(_T("\nFound FEMIN\n"));
 		gv->setFileType("FEMIN");
 	}
 	else if(Lines[1].find("SIE")!= std::string::npos)
 	{
+		//OutputDebugString(_T("\nFound SIE\n"));
 		gv->setFileType("SIE");
 	}
 	else
 	{
 		//Unsupported File type
-		std::cout <<"Error: File type not supported.\n(Requires FEMIN,SIE types)";
+		OutputDebugString(_T("\nError: File type not supported.\n(Requires FEMIN,SIE types)\n"));
+		return -1;
 	}
 	//OutputDebugString(_T("\nLineReader method finished\n"));
+	return 1;
 }
 
 int ParseInput::getNodes(GlobalVars *gv)
 {
 	//OutputDebugString(_T("\ngetNodes was called\n"));
 	int startInd, endInd;
+	double maxx,maxy,minx,miny, maxz;
 	std::string ft = gv->getFileType();
 	if(ft == "SIE")
 	{
@@ -115,12 +120,39 @@ int ParseInput::getNodes(GlobalVars *gv)
 		double y = atof(y_s.c_str());
 		double z = atof(z_s.c_str());
 		Node* n = new Node(id,x,y,z);
+		if(id ==1)//initialize with first node vals
+		{
+			maxx = x;
+			maxy = y;
+			minx = x;
+			miny = y;
+			maxz = z;
+		}
+		else
+		{
+			if(x > maxx)
+				maxx = x;
+			if(x < minx)
+				minx = x;
+			if(y > maxy)
+				maxy = y;
+			if(y < miny)
+				miny = y;
+			if(z > maxz)
+				maxz = z;
+		}
 		//ival.Format(_T("id:%d x:%f y:%f z: %f\n"), id,x,y,z);
 		//OutputDebugString(ival); //these lines are for debugging they print the id and xyz values above comments must also be turned on for these to work or ival must be redecalred
 		gv->addNode(n);
 	}
 	//NEED TO CATCH ERROR EITHER WITH TRY CATCH OR manual error checking
 	//Current code will allow an invalid file to be read see d:/InputTest.Txt
+	gv->setMaxX(maxx);
+	gv->setMaxY(maxy);
+	gv->setMaxZ(maxz);
+	gv->setMinX(minx);
+	gv->setMinY(miny);
+
 	return numNodes;
 }
 

@@ -88,9 +88,13 @@ void CFormLeft::OnInitialUpdate()
 		int a,b,c,d;
 		m_Nodes.SetExtendedStyle(LVS_EX_GRIDLINES);
 		a = m_Nodes.InsertColumn(0,_T("Node ID"),0,55,-1);
-		b = m_Nodes.InsertColumn(1,_T("X"),0,50,-1);
-		c = m_Nodes.InsertColumn(2,_T("Y"),0,50,-1);
-		d = m_Nodes.InsertColumn(3,_T("Z"),0,50,-1);
+		b = m_Nodes.InsertColumn(1,_T("X"),0,70,-1);
+		c = m_Nodes.InsertColumn(2,_T("Y"),0,70,-1);
+		d = m_Nodes.InsertColumn(3,_T("Z"),0,70,-1);
+		/*m_Nodes.SetColumnWidth(0, 55);
+		m_Nodes.SetColumnWidth(1, 70);
+		m_Nodes.SetColumnWidth(2, 70);
+		m_Nodes.SetColumnWidth(3, 70);*/
 		pDoc->GV->setCreated(true);
 	}
 	//CString testing;

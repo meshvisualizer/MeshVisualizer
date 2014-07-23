@@ -1,4 +1,4 @@
-﻿Build started 7/21/2014 9:09:02 PM.
+﻿Build started 7/22/2014 5:57:01 PM.
      1>Project "D:\MeshVisualizer\MeshVis\MeshVis.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\MeshVis.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -6,8 +6,12 @@
          All outputs are up-to-date.
          c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _UNICODE /D UNICODE /D _AFXDLL /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\MeshVis.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt FormRight.cpp
          FormRight.cpp
-     1>d:\meshvisualizer\meshvis\formright.cpp(433): warning C4305: '*=' : truncation from 'double' to 'float'
-     1>d:\meshvisualizer\meshvis\formright.cpp(435): warning C4305: '*=' : truncation from 'double' to 'float'
+     1>d:\meshvisualizer\meshvis\formright.cpp(332): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>d:\meshvisualizer\meshvis\formright.cpp(806): warning C4305: 'argument' : truncation from 'double' to 'GLfloat'
+     1>d:\meshvisualizer\meshvis\formright.cpp(1211): warning C4305: '*=' : truncation from 'double' to 'float'
+     1>d:\meshvisualizer\meshvis\formright.cpp(1213): warning C4305: '*=' : truncation from 'double' to 'float'
+     1>d:\meshvisualizer\meshvis\formright.cpp(1254): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>d:\meshvisualizer\meshvis\formright.cpp(1255): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
        ResourceCompile:
          All outputs are up-to-date.
        ManifestResourceCompile:
@@ -40,4 +44,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.18
+Time Elapsed 00:00:01.17

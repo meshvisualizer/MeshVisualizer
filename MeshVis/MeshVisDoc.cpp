@@ -62,19 +62,33 @@ void CMeshVisDoc::Serialize(CArchive& ar)
 	}
 	else
 	{
+		if(GV->getFileOpen())//means a file has already been opened
+		{
+			OutputDebugString(_T("\nA file is already open therefore this action is not allowed.\n"));
+			return;
+		}
 		// TODO: add loading code here
 		//ar.m_strFileName;
 		//GV = new GlobalVars();
-		
+		else
+		{
 		OutputDebugString(_T("\nName of file: "));
 		OutputDebugString((LPCTSTR)ar.m_strFileName);
 		OutputDebugString(_T("\n"));
 		ParseInput *fin = &ParseInput(ar.m_strFileName);
-		fin->lineReader(GV);
+		if(fin->lineReader(GV)==-1)
+		{
+			return;//indicates invalid file type
+		}
 		CString numNodes; 
 		CString temp;
-		fin->getNodes(GV);
+		if(fin->getNodes(GV)==-1)
+		{
+			return;//indicates no nodes were in the file
+		}
 		fin->getElements(GV);
+		GV->setFileOpen(true);
+		}
 		//numNodes.Format(_T("\nNodes Number:%d\n"), fin->getNodes(GV));
 		//OutputDebugString((LPCTSTR)numNodes);
 		//temp.Format(_T("After file read:\nNumNodes in GV:%d\n"),GV->getNumNode());
