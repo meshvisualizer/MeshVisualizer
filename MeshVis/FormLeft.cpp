@@ -5,6 +5,7 @@
 #include "FormLeft.h"
 #include "Node.h"
 #include "MeshVisDoc.h"
+#include "AddNode.h"
 
 
 // CFormLeft
@@ -19,6 +20,9 @@ CFormLeft::CFormLeft()
 	//m_Nodes.InsertItem(0, _T("firsttest"));
 	//
 	//m_Nodes.InsertColumn(0, _T("Node ID:"));
+	xin = "0";
+	yin = "0";
+	zin = "0";
 	
 }
 
@@ -37,6 +41,8 @@ BEGIN_MESSAGE_MAP(CFormLeft, CFormView)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST1, &CFormLeft::OnLvnItemchangedList1)
 //	ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST2, &CFormLeft::OnLvnItemchangedList2)
 ON_NOTIFY(LVN_ITEMCHANGED, IDC_LIST2, &CFormLeft::OnItemchangedList2)
+ON_BN_CLICKED(IDC_BUTTON1_HELLO, &CFormLeft::OnBnClickedButton1Hello)
+ON_BN_CLICKED(IDC_BUTTON2, &CFormLeft::OnBnClickedButton2)
 END_MESSAGE_MAP()
 
 
@@ -193,3 +199,94 @@ BOOL CFormLeft::OnCommand(WPARAM wParam, LPARAM lParam)
 	return CFormView::OnCommand(wParam, lParam);
 }
 */
+
+	void CFormLeft::OnBnClickedButton1Hello()
+{
+	// TODO: Add your control notification handler code here
+	CString xin,yin,zin, vals;
+	CAddNode addNode;
+	if(addNode.DoModal()==IDOK)
+	{
+	xin = addNode.getX();
+	yin = addNode.getY();
+	zin = addNode.getZ();
+	//vals.Format(_T("\nx:%s y:%s z:%s\n"), xin, yin,zin);
+	//OutputDebugString(vals);
+	double xNew = _tstof(xin);
+	double yNew = _tstof(yin);
+	double zNew = _tstof(zin);
+	//vals.Format(_T("\nx:%f y:%f z:%f\n"), xNew, yNew,zNew);
+	//OutputDebugString(vals);
+	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
+	int currentID = pDoc->GV->getNumNode();
+	//vals.Format(_T("currentID:%d\n"), currentID);
+	//OutputDebugString(vals);
+	int nextID = currentID+1;
+	//vals.Format(_T("nextID:%d\n"), nextID);
+	//OutputDebugString(vals);
+	Node * n = new Node(nextID, xNew,yNew,zNew);
+	pDoc->GV->addNode(n);
+	pDoc->GV->setNumNodes(nextID);
+	if(currentID == 0)//If this is first node
+	{
+		pDoc->GV->setMaxX(xNew);
+		pDoc->GV->setMaxY(yNew);
+		pDoc->GV->setMaxZ(zNew);
+		pDoc->GV->setMinX(xNew);
+		pDoc->GV->setMinY(yNew);
+	}
+	else
+	{
+		if(xNew > pDoc->GV->getMaxX())
+		{
+			pDoc->GV->setMaxX(xNew);
+		}
+		if(yNew > pDoc->GV->getMaxY())
+		{
+			pDoc->GV->setMaxY(yNew);
+		}
+		if(zNew > pDoc->GV->getMaxZ())
+		{
+			pDoc->GV->setMaxZ(zNew);
+		}
+		if(xNew < pDoc->GV->getMinX())
+		{
+			pDoc->GV->setMinX(xNew);
+		}
+		if(yNew < pDoc->GV->getMinY())
+		{
+			pDoc->GV->setMinY(yNew);
+		}
+	}
+	TCHAR buf[32];
+	LPCTSTR IDN = _itot(nextID, buf, 10);
+	m_Nodes.InsertItem(nextID,(LPCTSTR)IDN);
+	//m_Nodes.SetItemText(nextID,0,xin);
+	m_Nodes.SetItemText(nextID-1,1,xin);
+	m_Nodes.SetItemText(nextID-1,2,yin);
+	m_Nodes.SetItemText(nextID-1,3,zin);
+	pDoc->GV->setDoScaling(true);
+	//pDoc->GV->setFileOpen(true);
+	//pDoc->GV->setCreated(true);
+	//pDoc->GV->setViewAxes(false);
+	}
+}
+
+
+	void CFormLeft::OnBnClickedButton2()
+	{
+		// TODO: Add your control notification handler code here
+		CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
+		for(int j = 0; j<pDoc->GV->getNumNode(); j++)
+		{
+			//std::string node = pDoc->GV->getNode(j)->toString();
+			Node * tn = pDoc->GV->getNode(j);
+			int id = tn->getID();
+			double x = tn->getX(); 
+			double y = tn->getY();
+			double z = tn->getZ();
+			CString Cnode;
+			Cnode.Format(_T("loop val: %d\n id: %d x:%f y:%f z:%f\n"), j, id,x,y,z);
+			OutputDebugString((LPCTSTR)Cnode);
+		}
+	}

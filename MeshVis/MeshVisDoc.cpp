@@ -126,6 +126,9 @@ void CMeshVisDoc::Serialize(CArchive& ar)
 			}
 			OutputDebugString(_T("\n"));
 		}*/  //END OF PRINTING
+		CString list;
+		list.Format(_T("\nNodes: %d Elements %d\n"), GV->getNumNode(), GV->getNumElements());
+		OutputDebugString(list);
 	}
 }
 

@@ -104,6 +104,7 @@
     <None Include="UserImages.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddNode.h" />
     <ClInclude Include="FormLeft.h" />
     <ClInclude Include="FormRight.h" />
     <ClInclude Include="GlobalVars.h" />
@@ -120,6 +121,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddNode.cpp" />
     <ClCompile Include="FormLeft.cpp" />
     <ClCompile Include="FormRight.cpp" />
     <ClCompile Include="GlobalVars.cpp" />

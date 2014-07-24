@@ -14,6 +14,7 @@ IMPLEMENT_DYNCREATE(CFormRight, CFormView)
 CFormRight::CFormRight()
 	: CFormView(CFormRight::IDD)
 {
+	scale = 1;
 }
 
 CFormRight::~CFormRight()
@@ -70,7 +71,7 @@ void CFormRight::OnBnClickedOk()
 void CFormRight::RenderScene()
 {
 	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
-	
+	OutputDebugString(_T("\nTHE RENDER SCENE METHOD WAS CALLED\n"));
 	
 	m_OpenGL.Init( (GetDC())->m_hDC );
 	// TODO: Add your control notification handler code here
@@ -109,12 +110,17 @@ void CFormRight::RenderScene()
 	{
 		if(pDoc->GV->showNodes())
 		{
+			OutputDebugString(_T("Node Viewing is turned on.\n"));
+			int n = pDoc->GV->getNumNode();
+			CString cn;
+			cn.Format(_T("nodes:%d\n"),n);
+			OutputDebugString(cn);
 			glPointSize(2);
 			glColor3f(1.0, 0.0, 0.0);
 			glBegin(GL_POINTS);
 				for(int j = 0; j<pDoc->GV->getNumNode(); j++)
 				{
-					std::string node = pDoc->GV->getNode(j)->toString();
+					//std::string node = pDoc->GV->getNode(j)->toString();
 					Node * tn = pDoc->GV->getNode(j);
 					int id = tn->getID();
 					double x = tn->getX()*scale; 
@@ -125,20 +131,19 @@ void CFormRight::RenderScene()
 			glEnd();
 		}
 
-
 	
-		bool polys = true;
+		bool polys = false;
 		if(polys)
 		{
 		int e = pDoc->GV->getNumElements();
-		for(int i = 0; i < e; i ++)
+		for(int i = 0; i < e; i++)
 		{
 			std::vector<int> elementI = *pDoc->GV->getElement(i);
 			//OutputDebugString(_T("\n got the element.\n"));
 			int nodes = elementI[2];
-			//CString num; 
-			//num.Format(_T("\nElement:%d has %d nodes:\n"), i, nodes);
-			//OutputDebugString(num);
+			CString num; 
+			num.Format(_T("\nElement:%d has %d nodes:\n"), i, nodes);
+			OutputDebugString(num);
 			switch (nodes)
 			{
 			case 2: 
@@ -168,7 +173,7 @@ void CFormRight::RenderScene()
 				}
 			case 4: 
 				{
-					OutputDebugString(_T("\nElement of type 4 (quad)\n"));
+					//OutputDebugString(_T("\nElement of type 4 (quad)\n"));
 					glColor3f(0.0, 1.0, 1.0);//PURPLE
 					/*for(int k =0; k < nodes; k++)//This may need to be changed to counter clock wise initialization meaning 0,1,3,2 instead of 0,1,2,3,
 					{
@@ -181,8 +186,11 @@ void CFormRight::RenderScene()
 						glVertex3d(x,y,z);
 						glEnd();
 					}*/
+					//CString qa;
 					glBegin(GL_QUADS);
 					std::vector<double> tempv = pDoc->GV->getNodeVec(i, 0, scale);
+					//qa.Format(_T("\ni: %d x:%f y:%f z:%f\n"),i,tempv[0], tempv[1], tempv[2]);
+					//OutputDebugString(qa);
 					glVertex3d(tempv[0], tempv[1], tempv[2]);
 					tempv = pDoc->GV->getNodeVec(i, 1, scale);
 					glVertex3d(tempv[0], tempv[1], tempv[2]);
@@ -272,7 +280,7 @@ void CFormRight::RenderScene()
 				}
 			case 9:
 				{
-					OutputDebugString(_T("\nThis will be a 2nd order plate."));
+					//OutputDebugString(_T("\nThis will be a 2nd order plate."));
 
 					glColor3f(0.0, 0.0, 1.0); ///BLUE
 					//0,3,4,1
@@ -605,12 +613,12 @@ void CFormRight::RenderScene()
 		if(wireframe)
 		{
 		int e = pDoc->GV->getNumElements();
-		for(int i = 0; i < e; i ++)
+		for(int i = 0; i < e; i++)
 		{
 			std::vector<int> elementI = *pDoc->GV->getElement(i);
 			//OutputDebugString(_T("\n got the element.\n"));
 			int nodes = elementI[2];
-			//CString num; 
+			CString num; 
 			//num.Format(_T("\nElement:%d has %d nodes:\n"), i, nodes);
 			//OutputDebugString(num);
 			switch (nodes)
@@ -656,20 +664,29 @@ void CFormRight::RenderScene()
 						glEnd();
 					}*/
 					glBegin(GL_LINE_LOOP);
+					//CString qa;
 					std::vector<double> tempv = pDoc->GV->getNodeVec(i, 0, scale);
+					//qa.Format(_T("\ni: %d x:%f y:%f z:%f\n"),i,tempv[0], tempv[1], tempv[2]);
+					//OutputDebugString(qa);
 					glVertex3d(tempv[0], tempv[1], tempv[2]);
 					tempv = pDoc->GV->getNodeVec(i, 1, scale);
+					//qa.Format(_T("\ni: %d x:%f y:%f z:%f\n"),i,tempv[0], tempv[1], tempv[2]);
+					//OutputDebugString(qa);
 					glVertex3d(tempv[0], tempv[1], tempv[2]);
 					tempv = pDoc->GV->getNodeVec(i, 3, scale);
+					//qa.Format(_T("\ni: %d x:%f y:%f z:%f\n"),i,tempv[0], tempv[1], tempv[2]);
+					//OutputDebugString(qa);
 					glVertex3d(tempv[0], tempv[1], tempv[2]);
 					tempv = pDoc->GV->getNodeVec(i, 2, scale);
+					//qa.Format(_T("\ni: %d x:%f y:%f z:%f\n"),i,tempv[0], tempv[1], tempv[2]);
+					//OutputDebugString(qa);
 					glVertex3d(tempv[0], tempv[1], tempv[2]);
 					glEnd();
 					break;
 				}
 			case 8:
 				{
-					//OutputDebugString(_T("\nThis will be a first order cube."));
+					//OutputDebugString(_T("\nThis will be a first order cube.8"));
 					 
 					glColor3f(0.0, 0.0, 1.0); //blue frame on YELLOW
 					//Right side quad:0,1,3,2
@@ -746,7 +763,7 @@ void CFormRight::RenderScene()
 				}
 			case 9:
 				{
-					OutputDebugString(_T("\nThis will be a 2nd order plate."));
+					//OutputDebugString(_T("\nThis will be a 2nd order plate.9"));
 
 					glColor3f(1.0, 0.0, 0.0); ///red frame on BLUE
 					//0,3,4,1
@@ -801,7 +818,7 @@ void CFormRight::RenderScene()
 				}
 			case 27: //27 node element, 2nd order 1 node represents center
 				{
-					//OutputDebugString(_T("\nThis will be a 2nd order cube."));
+					//OutputDebugString(_T("\nThis will be a 2nd order cube.27"));
 					
 					glColor3f(1.0, 0.5, 0.1); //orange on cyan? not exactly sure what color this is
 					glBegin(GL_LINE_LOOP);//1 IDs: 0,1,4,3
@@ -1233,7 +1250,6 @@ void CFormRight::OnPaint()
 	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
 	if(pDoc->GV->getFileOpen() && !sized)
 	{
-		scale = 1;
 		autoSizing();
 		sized = true;
 	}
@@ -1251,6 +1267,7 @@ void CFormRight::autoSizing()
 	double minY = pDoc->GV->getMinY();
 	double maxZ = pDoc->GV->getMaxZ();
 
+	
 	float scaleX = 20.0 / (maxX - minX);
 	float scaleY = 20.0 / (maxY - minY);
 	float optimalScale = scaleX<scaleY?scaleX:scaleY;

@@ -8,6 +8,7 @@
 #include "MainFrm.h"
 #include "FormLeft.h"
 #include "FormRight.h"
+#include "AddNode.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

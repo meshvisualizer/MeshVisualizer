@@ -20,7 +20,7 @@ GlobalVars::GlobalVars()
 	this->numElements = 0;
 	this->created = false;
 	this->viewAxes = true;
-	this->viewNodes = false;
+	this->viewNodes = true;
 	this->fileOpen = false;
 }
 
@@ -124,4 +124,8 @@ void GlobalVars::setMaxZ(double n)
 void GlobalVars::setMinY(double n)
 {
 	this->minY = n;
+}
+void GlobalVars::setDoScaling(bool val)
+{
+	this->doScaling = val;
 }

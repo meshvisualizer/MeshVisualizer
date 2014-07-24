@@ -183,6 +183,10 @@ int ParseInput::getElements(GlobalVars *gv)
 		}
 	}
 	int numElements = endInd - startInd;
+	CString inER;
+	inER.Format(_T("\nInside the element read numEl:%d sti:%d endi:%d\n"),numElements,endInd,startInd);
+	OutputDebugString(inER);
+
 	gv->setNumElements(numElements);
 	int numNodes;
 	int max = 0;//I think this is for counting max node associations

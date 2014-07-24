@@ -78,6 +78,9 @@
     <ClInclude Include="ParseInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AddNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MeshVis.cpp">
@@ -114,6 +117,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ParseInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AddNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

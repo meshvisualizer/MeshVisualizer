@@ -32,5 +32,8 @@ public:
 	CListCtrl m_Nodes;
 //	afx_msg void OnLvnItemchangedList2(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnItemchangedList2(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnBnClickedButton1Hello();
+	CString xin, yin,zin;
+	afx_msg void OnBnClickedButton2();
 };
 

@@ -26,6 +26,7 @@ private:
 	bool fileOpen;
 	bool viewNodes;
 	bool viewAxes;
+	bool doScaling;
 	//List of elements
 	//std::vector<Element> elementList; //Element class not yet implemented.
 public:
@@ -41,6 +42,7 @@ public:
 	bool getCreated(){return created;};
 	std::string getFileType(){return fileType;};
 	bool showNodes(){return viewNodes;};
+	bool getDoScaling(){return doScaling;};
 	bool showAxes(){return viewAxes;};
 	bool getFileOpen(){return fileOpen;};
 	Node* getNode(int n);
@@ -71,6 +73,7 @@ public:
 	void setMaxY(double n);
 	void setMinY(double n);
 	void setMaxZ(double n);
+	void setDoScaling(bool val);
 
 	//Operators
 	void addNode(Node* n);//not implemented yet.
