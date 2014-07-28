@@ -72,6 +72,10 @@ void CFormRight::RenderScene()
 {
 	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
 	OutputDebugString(_T("\nTHE RENDER SCENE METHOD WAS CALLED\n"));
+	CString ver, vers;
+	ver = glGetString(GL_VERSION);
+	vers.Format(_T("\nOpenGL version:%s\n"), ver);
+	OutputDebugString(vers);
 	
 	m_OpenGL.Init( (GetDC())->m_hDC );
 	// TODO: Add your control notification handler code here
@@ -99,7 +103,13 @@ void CFormRight::RenderScene()
 	else z += 10;
 	gluLookAt(x,y,z,0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	*/
-	
+	/* //These lines will print the opengl version to the debug window
+	CString ver;
+	ver = glGetString(GL_VERSION);
+	OutputDebugString(_T("\nOpenGL Version:"));
+	OutputDebugString(ver);
+	OutputDebugString(_T("\n"));
+	*/
 
 	glPushMatrix();
 	gluLookAt(0, 0, cameraZ, 0, 0, 0.0f, 0.0f, 1.0f, 0.0f);
@@ -153,8 +163,8 @@ void CFormRight::RenderScene()
 					glBegin(GL_LINES);
 					for(int k =0; k < nodes; k++)
 					{
-						int nodeID = elementI[k+2];
-						Node * tn = pDoc->GV->getNode(nodeID);
+						int nodeID = elementI[k+3];//was k+2 before
+						Node * tn = pDoc->GV->getNode(nodeID-1);//was just node id before
 						/*
 						double x =tn->getX();
 						double y = tn->getY();
@@ -630,8 +640,8 @@ void CFormRight::RenderScene()
 					glBegin(GL_LINES);
 					for(int k =0; k < nodes; k++)
 					{
-						int nodeID = elementI[k+2];
-						Node * tn = pDoc->GV->getNode(nodeID);
+						int nodeID = elementI[k+3];//k+2
+						Node * tn = pDoc->GV->getNode(nodeID-1);//just nodeID
 						/*
 						double x =tn->getX();
 						double y = tn->getY();
@@ -1237,7 +1247,7 @@ BOOL CFormRight::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 void CFormRight::OnPaint()
 {
 	static bool init = false;
-	static bool sized = false;
+	//static bool sized = false;
 	CPaintDC dc(this); // device context for painting
 	
 	if(!init)
@@ -1248,10 +1258,10 @@ void CFormRight::OnPaint()
 	}
 
 	CMeshVisDoc *pDoc=(CMeshVisDoc *)GetDocument();
-	if(pDoc->GV->getFileOpen() && !sized)
+	if(pDoc->GV->getDoScaling())
 	{
 		autoSizing();
-		sized = true;
+		pDoc->GV->setDoScaling(false);
 	}
 	RenderScene();
 
@@ -1266,17 +1276,26 @@ void CFormRight::autoSizing()
 	double maxY = pDoc->GV->getMaxY();
 	double minY = pDoc->GV->getMinY();
 	double maxZ = pDoc->GV->getMaxZ();
+	float optimalScale;
 
-	
-	float scaleX = 20.0 / (maxX - minX);
-	float scaleY = 20.0 / (maxY - minY);
-	float optimalScale = scaleX<scaleY?scaleX:scaleY;
+	if(maxX==minX && maxY==minY)
+		optimalScale = 1;
+	else if(maxX==minX)
+		optimalScale = 20.0 / (maxY - minY);
+	else if(maxY==minY)
+		optimalScale = 20.0 / (maxX - minX);
+	else
+	{
+		float scaleX = 20.0 / (maxX - minX);
+		float scaleY = 20.0 / (maxY - minY);
+		optimalScale = scaleX<scaleY?scaleX:scaleY;	
+	}
 
 	cameraZ=50;
 	if(maxZ*optimalScale>cameraZ) cameraZ+=5;
 
-	//trans_x = -(maxX+minX)*optimalScale/2;
-	//trans_y = -(maxY+minY)*optimalScale/2;
+	trans_x = -(maxX+minX)*optimalScale/2;
+	trans_y = -(maxY+minY)*optimalScale/2;
 
 	scale = optimalScale;
 }
@@ -1326,5 +1345,9 @@ void CFormRight::OnBnClickedZminus()
 {
 	rotate_z-=10;
 	if(rotate_z<=0) rotate_z=360;
+	InvalidateRect(NULL, FALSE);
+}
+void CFormRight::refresh()
+{
 	InvalidateRect(NULL, FALSE);
 }

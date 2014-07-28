@@ -15,6 +15,7 @@ Node* GlobalVars::getNode(int n)
 }
 GlobalVars::GlobalVars()
 {
+	//OutputDebugString(_T("\nGV Constructor was called.\n"));
 	this->fileType = "";
 	this->numNodes = 0;
 	this->numElements = 0;
@@ -26,7 +27,17 @@ GlobalVars::GlobalVars()
 
 GlobalVars::~GlobalVars()//Will need ot delete the node and element lists.
 {
-	
+	//OutputDebugString(_T("\nGV Destructor was called.\n"));
+	int nodes = this->nodeList.size();
+	int els = this->elementList.size();
+	for(int i = 0; i < nodes; i++)
+	{
+		delete nodeList[i];
+	}
+	for(int j = 0; j < els; j++)
+	{
+		delete elementList[j];
+	}
 }
 
 void GlobalVars::setNumNodes(int n)
@@ -128,4 +139,10 @@ void GlobalVars::setMinY(double n)
 void GlobalVars::setDoScaling(bool val)
 {
 	this->doScaling = val;
+}
+
+void GlobalVars::addElement(std::vector<int>* v)
+{
+	this->elementList.push_back(v);
+	this->numElements++;
 }

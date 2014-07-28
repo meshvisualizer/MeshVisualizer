@@ -38,6 +38,7 @@ std::string Node::toString()
 
 Node::~Node()
 {
+	//OutputDebugString(_T("\n Node is destroyed."));
 }
 
 

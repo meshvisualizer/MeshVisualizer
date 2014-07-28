@@ -43,6 +43,7 @@ public:
 	afx_msg void OnBnClickedYminus();
 	afx_msg void OnBnClickedZplus();
 	afx_msg void OnBnClickedZminus();
+	void refresh();
 
 private:
 	void CFormRight::RenderScene();

@@ -77,6 +77,7 @@ public:
 
 	//Operators
 	void addNode(Node* n);//not implemented yet.
+	void addElement(std::vector<int>* v);
 	
 
 };

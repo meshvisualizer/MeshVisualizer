@@ -9,6 +9,7 @@
 #include "FormLeft.h"
 #include "FormRight.h"
 #include "AddNode.h"
+#include "AddWire.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW

@@ -20,8 +20,8 @@ class ParseInput : public CObject
 private:
 	//GlobalVars GV;//This object will need to be put at a higher level then passed down. Leaving here so file io can be implemented.
 	CString filename;
-	std::string SIE;
-	std::string FEM;
+	//std::string SIE;
+	//std::string FEM;
 	std::vector<std::string> Lines; //Place to store lines from file
 	int findIndex(std::string s);
 	std::string nextToken(std::string *ps);	//Find next token in a string.by Ce

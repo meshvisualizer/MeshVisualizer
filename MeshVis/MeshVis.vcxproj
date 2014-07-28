@@ -105,6 +105,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddNode.h" />
+    <ClInclude Include="AddWire.h" />
     <ClInclude Include="FormLeft.h" />
     <ClInclude Include="FormRight.h" />
     <ClInclude Include="GlobalVars.h" />
@@ -122,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddNode.cpp" />
+    <ClCompile Include="AddWire.cpp" />
     <ClCompile Include="FormLeft.cpp" />
     <ClCompile Include="FormRight.cpp" />
     <ClCompile Include="GlobalVars.cpp" />

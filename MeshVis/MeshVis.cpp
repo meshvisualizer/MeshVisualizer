@@ -167,6 +167,8 @@ protected:
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
+public:
+//	virtual BOOL OnInitDialog();
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(CAboutDlg::IDD)
@@ -218,3 +220,4 @@ BOOL CMeshVisApp::OnIdle(LONG lCount)
 
 	return CWinAppEx::OnIdle(lCount);
 }
+

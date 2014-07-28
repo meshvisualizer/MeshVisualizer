@@ -36,6 +36,8 @@ CMeshVisDoc::CMeshVisDoc()
 
 CMeshVisDoc::~CMeshVisDoc()
 {
+	//OutputDebugString(_T("Destructor called.\n"));
+	delete GV;
 }
 
 BOOL CMeshVisDoc::OnNewDocument()
@@ -64,6 +66,9 @@ void CMeshVisDoc::Serialize(CArchive& ar)
 	{
 		if(GV->getFileOpen())//means a file has already been opened
 		{
+
+			MessageBox(0,_T("A file is already open\nOpening a new file will close current work."), _T("Warning"), MB_ICONERROR | MB_OKCANCEL);
+			//MessageBox(0, _T("And text here"), _T("MessageBox caption"), MB_OK);
 			OutputDebugString(_T("\nA file is already open therefore this action is not allowed.\n"));
 			return;
 		}
@@ -72,22 +77,26 @@ void CMeshVisDoc::Serialize(CArchive& ar)
 		//GV = new GlobalVars();
 		else
 		{
-		OutputDebugString(_T("\nName of file: "));
-		OutputDebugString((LPCTSTR)ar.m_strFileName);
-		OutputDebugString(_T("\n"));
-		ParseInput *fin = &ParseInput(ar.m_strFileName);
-		if(fin->lineReader(GV)==-1)
-		{
-			return;//indicates invalid file type
-		}
-		CString numNodes; 
-		CString temp;
-		if(fin->getNodes(GV)==-1)
-		{
-			return;//indicates no nodes were in the file
-		}
-		fin->getElements(GV);
-		GV->setFileOpen(true);
+			OutputDebugString(_T("\nName of file: "));
+			OutputDebugString((LPCTSTR)ar.m_strFileName);
+			OutputDebugString(_T("\n"));
+			ParseInput *fin = new ParseInput(ar.m_strFileName);
+			if(fin->lineReader(GV)==-1)
+			{
+				return;//indicates invalid file type
+			}
+			CString numNodes; 
+			CString temp;
+			if(fin->getNodes(GV)==-1)
+			{
+				OutputDebugString(_T("\nError: File read terminated.\nNo nodes found.\n"));
+				return;//indicates no nodes were in the file
+			}
+			fin->getElements(GV);
+			GV->setFileOpen(true);
+			GV->setDoScaling(true);
+			OutputDebugString(_T("\nCalling the delete on fin pointer\n"));
+			delete fin;
 		}
 		//numNodes.Format(_T("\nNodes Number:%d\n"), fin->getNodes(GV));
 		//OutputDebugString((LPCTSTR)numNodes);

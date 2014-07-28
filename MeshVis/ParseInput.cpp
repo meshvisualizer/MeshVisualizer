@@ -18,18 +18,22 @@ ParseInput::ParseInput(CString fin)
 
 ParseInput::~ParseInput()
 {
+	//OutputDebugString(_T("\nPI destructor called.\n"));
 }
 
 int ParseInput::lineReader(GlobalVars *gv) 
 { 
 	//OutputDebugString(_T("\nLineReader called\n"));
+
     std::ifstream file(filename);//will become the file name //will need a try catch somewhere
-    std::string line; 
+    std::string line;
+	
     while (std::getline(file, line))
     {
 		Lines.push_back(line);
     }
 	file.close();//not sure if this is needed at this point or later
+	//return -1;
 	if(Lines[1].find("FEMIN")!= std::string::npos)
 	{
 		//OutputDebugString(_T("\nFound FEMIN\n"));
@@ -87,7 +91,9 @@ int ParseInput::getNodes(GlobalVars *gv)
 			break;
 		}
 	}
-	if (startInd > endInd) { return -1; }
+	if (startInd > endInd) { 
+		OutputDebugString(_T("\nThere were no nodes in the file."));
+		return -1; }
 	if (startInd == endInd) 
 	{
 		std::cout <<"Error: No nodes found.";
@@ -95,6 +101,14 @@ int ParseInput::getNodes(GlobalVars *gv)
 	}
 
 	int numNodes = endInd - startInd;
+	//CString nc;
+	//nc.Format(_T("num nodes in read:%d"), numNodes);
+	//OutputDebugString(nc);
+	if(numNodes <= 0)
+	{
+		OutputDebugString(_T("There were no nodes in the file."));
+		return -1;
+	}
 	gv->setNumNodes(numNodes);
 	//OutputDebugString(_T("\nnumNodes should now be set"));
 	if(ft == "SIE")
@@ -158,6 +172,7 @@ int ParseInput::getNodes(GlobalVars *gv)
 
 int ParseInput::getElements(GlobalVars *gv)
 {
+	//OutputDebugString(_T("\nget elements was called\n"));
 	int startInd, endInd;
 	std::string ft = gv->getFileType();
 	if(ft == "SIE")
@@ -183,6 +198,11 @@ int ParseInput::getElements(GlobalVars *gv)
 		}
 	}
 	int numElements = endInd - startInd;
+	if(numElements <= 0)
+	{
+		OutputDebugString(_T("There were no elements in the file."));
+		return -1;
+	}
 	CString inER;
 	inER.Format(_T("\nInside the element read numEl:%d sti:%d endi:%d\n"),numElements,endInd,startInd);
 	OutputDebugString(inER);
